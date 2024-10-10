@@ -17,7 +17,20 @@ namespace swBackend.Controllers
         }
 
         [HttpGet("characters")]
-        public async Task<ActionResult<IEnumerable<CharacterModel>>> GetAllCharacters([FromQuery] string name)
+        public async Task<ActionResult<IEnumerable<CharacterModel>>> GetAllCharacters(/*[FromQuery] string name*/)
+        {
+            var characters = await _CharacterRepository.GetAllCharacters();
+
+            //if (!string.IsNullOrEmpty(name))
+            //{
+            //    characters = characters.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+            //}
+
+            return Ok(characters);
+        }
+
+        [HttpGet("characters/search")]
+        public async Task<ActionResult<IEnumerable<CharacterModel>>> GetCharacter([FromQuery] string name)
         {
             var characters = await _CharacterRepository.GetAllCharacters();
 
