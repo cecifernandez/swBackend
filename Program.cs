@@ -9,6 +9,7 @@ builder.Services.AddHttpClient();
 
 builder.Services.AddScoped<ICharacterRepository, CharacterRepository>();
 builder.Services.AddScoped<IFilmRepository, FilmRepository>();
+builder.Services.AddScoped<InfoRepository>();
 
 //builder.Services.AddHttpClient<SWAPIService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

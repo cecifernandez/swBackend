@@ -2,7 +2,7 @@
 
 namespace swBackend.Models
 {
-    public class FilmModel
+    public class FilmModel 
     {
         [JsonPropertyName("title")]
         public string Title { get; set; }

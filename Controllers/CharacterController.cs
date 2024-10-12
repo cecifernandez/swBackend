@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using swBackend.Interfaces;
 using swBackend.Models;
+using swBackend.Repositories;
+using System.Net.Http;
 
 namespace swBackend.Controllers
 {
@@ -9,34 +11,34 @@ namespace swBackend.Controllers
     [ApiController]
     public class CharacterController : ControllerBase
     {
-        private readonly ICharacterRepository _CharacterRepository;
+        private readonly ICharacterRepository _characterRepository;
+        private readonly InfoRepository _infoRepository;
 
-        public CharacterController(ICharacterRepository CharacterRepository)
+        public CharacterController(ICharacterRepository CharacterRepository, InfoRepository infoRepository)
         {
-            _CharacterRepository = CharacterRepository;
+            _characterRepository = CharacterRepository;
+            _infoRepository = infoRepository;
         }
 
-        [HttpGet("characters")]
-        public async Task<ActionResult<IEnumerable<CharacterModel>>> GetAllCharacters(/*[FromQuery] string name*/)
-        {
-            var characters = await _CharacterRepository.GetAllCharacters();
 
-            //if (!string.IsNullOrEmpty(name))
-            //{
-            //    characters = characters.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
-            //}
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<CharacterModel>>> GetAllCharacters()
+        {
+            var characters = await _characterRepository.GetAllCharacters();
 
             return Ok(characters);
         }
 
-        [HttpGet("characters/search")]
+        [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<CharacterModel>>> GetCharacter([FromQuery] string name)
         {
-            var characters = await _CharacterRepository.GetAllCharacters();
+            var characters = await _characterRepository.GetAllCharacters();
 
-            if (!string.IsNullOrEmpty(name))
+            if (!string.IsNullOrWhiteSpace(name))
             {
-                characters = characters.Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
+                characters = characters
+                    .Where(c => c.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+                    .ToList(); 
             }
 
             return Ok(characters);

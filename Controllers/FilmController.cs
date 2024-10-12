@@ -17,7 +17,7 @@ namespace swBackend.Controllers
             _FilmRepository = filmRepository;
         }
 
-        [HttpGet("films")]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<FilmModel>>> GetAllFilmsAsync()
         {
 
